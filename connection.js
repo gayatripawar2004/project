@@ -4,11 +4,11 @@ var url = require("url");
 
 
 const conn = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "nodejs_project",
-    port: "3307"
+    host: "bfb15wq8xz61ryiwmzjy-mysql.services.clever-cloud.com",
+    user: "uxbf3ihdvnnnaonr",
+    password: "uxbf3ihdvnnnaonr",
+    database: "bfb15wq8xz61ryiwmzjy",
+   
 })
 const exe = util.promisify(conn.query).bind(conn);
 
