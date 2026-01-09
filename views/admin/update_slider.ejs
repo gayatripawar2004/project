@@ -1,0 +1,60 @@
+
+
+<%-include("navbar.ejs")%>
+
+
+ <div class="container-fluid">
+     <div class="row">
+        <div class="col-md-12">
+      <div class="bg-white p-4">
+    <h2>Update Slider</h2>
+   
+    
+    <form action="/admin/slider/update" method="post" enctype="multipart/form-data">
+        <div class="row">
+          <input type="hidden" name="id" value="<%= slider[0].id %>">
+
+        <div class="col-md-4   mt-4">        
+        <label class="fw-bold">Title</label>
+        <input type="text" name="title" value="<%= slider[0].title %>" class="form-control">
+        </div>
+        
+         <div class="col-md-8 mt-4"> 
+        <label class="fw-bold">Details</label>
+        <textarea name="details" class="form-control"><%= slider[0].details %></textarea>
+        </div>
+        
+         <div class="col-md-4   mt-4">
+        <label class="fw-bold">Button Text</label>
+        <input type="text" name="btn_text" value="<%= slider[0].btn_text %>" class="form-control">
+        </div>
+
+         <div class="col-md-4   mt-4"> 
+        <label class="fw-bold">Button URL</label>
+        <input type="text" name="btn_url" value="<%= slider[0].btn_url %>" class="form-control">
+        </div>
+
+         <div class="col-md-4   m-4"> 
+        <label class="fw-bold">Current Image</label><br>
+        <img src="/<%= slider[0].image %>" name="old_image" width="200"><br><br>
+        </div>
+
+         <div class="col-md-4   m-4"> 
+        <label class="fw-bold">Change Image</label>
+        <input type="file" name="image" class="form-control">
+        </div>
+
+         <div class="col-md-4   mt-4"> 
+        <input type="hidden" name="old_image" value="<%= slider[0].image %>">
+        </div>
+        </div>
+        <div class="col-md-12 text-center" >
+        <button class="btn btn-primary mt-3">Update</button>
+        </div>
+    </form>
+    </div>
+    </div>
+    </div>
+</div>
+
+<%-include("footer.ejs")%>

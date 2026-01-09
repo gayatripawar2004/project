@@ -1,0 +1,127 @@
+<%- include("navbar.ejs")%>
+
+<style>
+    .view-box {
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        margin-top: 30px;
+    }
+    .main-title {
+        font-size: 28px;
+        font-weight: bold;
+        border-left: 5px solid #28a745;
+        padding-left: 10px;
+    }
+    .label-head {
+        font-weight: bold;
+        color: #444;
+    }
+    .image-box img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+    }
+    table th {
+        background-color: #28a745;
+        color: white;
+    }
+</style>
+
+<div class="container view-box">
+
+    <!-- Title -->
+    <h2 class="main-title">Product Details</h2>
+    <hr>
+
+    <!-- Product Basic Info -->
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <p><span class="label-head">Product ID:</span> <%= product_view.product_id %></p>
+            <p><span class="label-head">Product Name:</span> <%= product_view.product_name %></p>
+            <p><span class="label-head">Company:</span> <%= product_view.product_company %></p>
+            <p><span class="label-head">Category:</span> <%= product_view.categary_name %></p>
+        </div>
+        <div class="col-md-6">
+            <p><span class="label-head">Colors:</span> <%= product_view.colors %></p>
+            <p><span class="label-head">Label:</span> <%= product_view.product_label %></p>
+            <p><span class="label-head">Details:</span> <%= product_view.product_detail %></p>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- Product Images -->
+    <h4>Product Images</h4>
+    <div class="row mt-3 image-box">
+        <% if(product_view.image_1){ %>
+        <div class="col-md-3 mb-3">
+            <img src="/upload/<%= product_view.image_1 %>" alt="Image 1">
+        </div>
+        <% } %>
+        <% if(product_view.image_2){ %>
+        <div class="col-md-3 mb-3">
+            <img src="/upload/<%= product_view.image_2 %>" alt="Image 2">
+        </div>
+        <% } %>
+        <% if(product_view.image_3){ %>
+        <div class="col-md-3 mb-3">
+            <img src="/upload/<%= product_view.image_3 %>" alt="Image 3">
+        </div>
+        <% } %>
+        <% if(product_view.image_4){ %>
+        <div class="col-md-3 mb-3">
+            <img src="/upload/<%= product_view.image_4 %>" alt="Image 4">
+        </div>
+        <% } %>
+    </div>
+
+    <hr>
+
+    <!-- Pricing Table -->
+  <h4>Product Pricing</h4>
+
+<div class="row text-center mt-4">
+
+    <!-- Size Row -->
+    <div class="col-md-12 mb-2">
+        <div class="row">
+            <% product_pricing_view.map(function(p){ %>
+                <div class="col-md-2 mb-2">
+                    <b><%= p.productL_size %></b>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Real Prize Row -->
+    <div class="col-md-12 mb-2">
+        <div class="row">
+            <% product_pricing_view.map(function(p){ %>
+                <div class="col-md-2 mb-2">
+                    ₹<b><%= p.real_prize %></b>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+    <!-- Duplicate Prize Row -->
+    <div class="col-md-12 mb-2">
+        <div class="row">
+            <% product_pricing_view.map(function(p){ %>
+                <div class="col-md-2 mb-2">
+                    ₹<b><%= p.duplicate_prize %></b>
+                </div>
+            <% }) %>
+        </div>
+    </div>
+
+</div>
+
+</div>
+
+
+<%- include("footer.ejs")%>

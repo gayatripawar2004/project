@@ -1,0 +1,21 @@
+<%-include("navbar.ejs")%>
+
+<div class="container-fluid bg-4 p-4" style="margin:20px 0px 0px 20px;">
+    <form action="/do_login" method="post">
+        <div class="col-md-4"></div>
+        <div class="col-md-6">
+            User Mobile <br>
+            <input class="form-control" type="number" name="user_mobile" ><br><br>
+            Password<br>
+            <input class="form-control" type="password" name="password" ><br><br>
+            
+            <button>Login</button>
+            <br><br>
+            <a href="/create_account">Create New Account</a>
+        </div>
+        <div class="col-md-2"></div>
+    
+    </form>
+</div>
+    
+<%-include("footer.ejs")%>

@@ -1,0 +1,128 @@
+<%- include("navbar.ejs") %>
+
+<div class="container-fluid bg-white mt-4 p-5">
+    <h1>Add Product</h1>
+
+    <form action="/admin/save_product" method="post" enctype="multipart/form-data">
+
+        <div class="row">
+
+            <!-- LEFT SIDE (8 columns) -->
+            <div class="col-md-8">
+                <div class="row">
+
+                    <div class="col-md-5 mt-4">
+                        Category Name <sup class="text-danger fw-bold">*</sup>
+                        <select class="form-control" name="categary_id" required>
+                            <option value="">Select Category</option>
+
+                            <% categary.map(function(val){ %>
+                                <option value="<%= val.categary_id %>">
+                                    <%= val.categary_name %>
+                                </option>
+                            <% }) %>
+                        </select>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Product Name <sup class="text-danger fw-bold">*</sup>
+                        <input type="text" class="form-control" name="product_name" required>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Product Company <sup class="text-danger fw-bold">*</sup>
+                        <input type="text" class="form-control" name="product_company" list="data" required>
+                    </div>
+
+                    <datalist id="data">
+                        <option>Adidas</option>
+                        <option>Puma</option>
+                        <option>Nike</option>
+                        <option>Zara</option>
+                        <option>Fabindia</option>
+                        <option>Allen Solly</option>
+                        <option>Burberry</option>
+                        <option>Hermès</option>
+                    </datalist>
+
+                    <div class="col-md-5 mt-4">
+                        Colors <sup class="text-danger fw-bold">*</sup>
+                        <input type="text" class="form-control" name="colors" required>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Product Label <sup class="text-danger fw-bold">*</sup>
+                        <input type="text" class="form-control" name="product_label" required>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Image 1 <sup class="text-danger fw-bold">*</sup>
+                        <input type="file" class="form-control" name="product_image_1" required>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Image 2 <sup class="text-danger fw-bold">*</sup>
+                        <input type="file" class="form-control" name="product_image_2" required>
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Image 3
+                        <input type="file" class="form-control" name="product_image_3">
+                    </div>
+
+                    <div class="col-md-5 mt-4">
+                        Image 4
+                        <input type="file" class="form-control" name="product_image_4">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE (4 columns) -->
+            <div class="col-md-4 mt-4">
+              <table class="table table-striped text-center">
+    <tr>
+        <th>Sizes</th>
+        <th>Price</th>
+        <th>Duplicate Price</th>
+    </tr>
+
+    <% var sizes = ["XS","XM","M","L","XL","XXL"]; %>
+
+    <% for (var i = 0; i < sizes.length; i++) { %>
+    <tr>
+        <td>
+            <%= sizes[i] %>
+            <input type="hidden" name="sizes" value="<%= sizes[i] %>">
+        </td>
+
+        <td>
+            <input type="text" name="real_prize" class="form-control">
+        </td>
+
+        <td>
+            <input type="text" name="duplicate_prize" class="form-control">
+        </td>
+    </tr>
+    <% } %>
+</table>
+
+            </div>
+
+            <!-- PRODUCT DETAILS FULL WIDTH -->
+            <div class="col-md-12 mt-4">
+                Product Details <sup class="text-danger fw-bold">*</sup>
+                <textarea name="product_detail" class="form-control" required></textarea>
+            </div>
+
+            <!-- SAVE BUTTON -->
+            <div class="col-md-12 mt-4 text-center">
+                <button type="submit" class="btn btn-success">Save Product</button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+
+<%- include("footer.ejs") %>

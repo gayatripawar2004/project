@@ -1,0 +1,86 @@
+<%-include("navbar.ejs")%>
+<form action="/order" method="post">
+    <div style="margin-top:50px;" class="container-fluid bg-white p-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">
+                                Enter Name <br>
+                                <input style="width:100%;" class="form-control" type="text" name="customer_name">
+                            </div>
+                            <div class="col-md-6">
+                                Enter Mobile <br>
+                                <input style="width:100%;" class="form-control" type="number" name="customer_mobile">
+                            </div>
+                            <div class="col-md-6">
+                                Enter State <br>
+                                <input style="width:100%;" class="form-control" type="text" name="state">
+                            </div>
+                            <div class="col-md-6">
+                                Enter District <br>
+                                <input style="width:100%;" class="form-control" type="text" name="district">
+                            </div>
+                            <div class="col-md-6">
+                                Enter City <br>
+                                <input style="width:100%;" class="form-control" type="text" name="city">
+                            </div>
+                            <div class="col-md-6">
+                                Enter Area <br>
+                                <input style="width:100%;" class="form-control" type="text" name="area">
+                            </div>
+                            <div class="col-md-6">
+                                Enter Landmark <br>
+                                <input style="width:100%;" class="form-control" type="text" name="landmark">
+                            </div>
+                            <div class="col-md-6">
+                                Enter Pincode <br>
+                                <input style="width:100%;" class="form-control" type="number" name="pincode">
+                            </div>
+                        </div>
+                    </div>
+                     <div class="col-md-4">
+                        <h3>Order Summary</h3>
+                        <hr>
+                        <span style="display: flex;">
+                            <b>Product Name</b>
+                            <b style="margin-left:120px;">Price</b>
+                        </span>
+
+                        <% var sum=0 %>
+                            <% cart.map(function(val,i){ %>
+                                <div style="display:flex;">
+                                    <p>
+                                        <%=val.product_name%> <b>X</b>
+                                            <%=val.qty %>
+                                    </p>
+                                    <p style="margin-left:200px;">₹<%= val.qty * val.real_prize %>
+                                    </p>
+                                </div>
+                                <% sum+=(val.qty * val.real_prize) %>
+                                    <% }) %>
+                                        <hr>
+                                        <span style="display:flex;">
+                                            <b>Product Amount Total</b>
+                                            <b style="margin-left:200px;"> ₹<%=sum %></b>
+                                        </span>
+                                        Select your Payment Type
+                                        <select class="form-control" name="payment_type">
+                                            <option value="">Select your Payment Type</option>
+                                            <option value="Online">Online Payment</option>
+                                            <option value="C_O_P">Cash On Delivery</option>
+
+                                        </select>
+
+                    </div>
+                    <div class="col-md-12 text-center">
+                        <button>Order Now</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </form>
+    <%-include("footer.ejs")%>

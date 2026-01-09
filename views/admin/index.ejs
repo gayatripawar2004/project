@@ -1,0 +1,673 @@
+<%-include("navbar.ejs")%>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+       
+        
+    }
+    
+    :root {
+        --primary-color: #4361ee;
+        --secondary-color: #3a0ca3;
+        --success-color: #4cc9f0;
+        --warning-color: #f72585;
+        --light-color: #f8f9fa;
+        --dark-color: #212529;
+        --gray-color: #6c757d;
+        --border-radius: 10px;
+        --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    body {
+        background-color: #f5f7fb;
+        color: var(--dark-color);
+    }
+    
+    .container-fluid {
+        padding: 0;
+        min-height: 100vh;
+    }
+    
+    .dashboard-wrapper {
+        display: flex;
+        min-height: calc(100vh - 80px); /* Adjust based on navbar height */
+    }
+    
+    .sidebar {
+        width: 250px;
+        background-color: white;
+        padding: 25px 20px;
+        box-shadow: var(--box-shadow);
+        overflow-y: auto;
+        transition: transform 0.3s ease;
+        z-index: 100;
+    }
+    
+    .logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .logo i {
+        color: var(--primary-color);
+        font-size: 28px;
+        margin-right: 10px;
+    }
+    
+    .logo h2 {
+        font-size: 22px;
+        color: var(--dark-color);
+    }
+    
+    .nav-links {
+        list-style: none;
+    }
+    
+    .nav-links li {
+        margin-bottom: 5px;
+    }
+    
+    .nav-links a {
+        display: flex;
+        align-items: center;
+        padding: 12px 15px;
+        text-decoration: none;
+        color: var(--gray-color);
+        border-radius: var(--border-radius);
+        transition: all 0.3s;
+    }
+    
+    .nav-links a i {
+        margin-right: 12px;
+        font-size: 18px;
+    }
+    
+    .nav-links a:hover, .nav-links a.active {
+        background-color: #eef2ff;
+        color: var(--primary-color);
+    }
+    
+    .main-content {
+        flex: 1;
+        padding: 25px;
+        overflow-y: auto;
+    }
+    
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    
+    .header h1 {
+        font-size: 28px;
+        color: var(--dark-color);
+    }
+    
+    .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .search-bar {
+        display: flex;
+        align-items: center;
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 10px 15px;
+        box-shadow: var(--box-shadow);
+    }
+    
+    .search-bar input {
+        border: none;
+        outline: none;
+        padding: 5px 10px;
+        width: 200px;
+    }
+    
+    .notification {
+        position: relative;
+        cursor: pointer;
+    }
+    
+    .notification i {
+        font-size: 20px;
+        color: var(--gray-color);
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background-color: var(--warning-color);
+        color: white;
+        border-radius: 50%;
+        width: 18px;
+        height: 18px;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .user-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+    }
+    
+    .stats-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        box-shadow: var(--box-shadow);
+        transition: transform 0.3s;
+    }
+    
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px;
+    }
+    
+    .card-header h3 {
+        font-size: 16px;
+        color: var(--gray-color);
+        font-weight: 500;
+    }
+    
+    .card-header i {
+        font-size: 24px;
+        color: var(--primary-color);
+    }
+    
+    .card-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
+    
+    .card-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: var(--dark-color);
+    }
+    
+    .card-change {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+    }
+    
+    .positive {
+        color: #2ecc71;
+    }
+    
+    .negative {
+        color: #e74c3c;
+    }
+    
+    .charts-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+    
+    .chart-card {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        box-shadow: var(--box-shadow);
+    }
+    
+    .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+    
+    .chart-header h3 {
+        font-size: 18px;
+        color: var(--dark-color);
+    }
+    
+    .chart-container {
+        height: 300px;
+        position: relative;
+    }
+    
+    .recent-orders {
+        background-color: white;
+        border-radius: var(--border-radius);
+        padding: 25px;
+        box-shadow: var(--box-shadow);
+    }
+    
+    .recent-orders h3 {
+        font-size: 18px;
+        color: var(--dark-color);
+        margin-bottom: 20px;
+    }
+    
+    .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .orders-table th {
+        text-align: left;
+        padding: 12px 15px;
+        border-bottom: 2px solid #eee;
+        color: var(--gray-color);
+        font-weight: 500;
+    }
+    
+    .orders-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
+    
+    .status {
+        padding: 5px 10px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .status.completed {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    
+    .status.pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    
+    .status.processing {
+        background-color: #d1ecf1;
+        color: #0c5460;
+    }
+    
+    .mobile-menu-btn {
+        display: none;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: var(--primary-color);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 101;
+        box-shadow: var(--box-shadow);
+    }
+    
+    @media (max-width: 1200px) {
+        .charts-container {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    @media (max-width: 992px) {
+        .sidebar {
+            position: fixed;
+            height: 100vh;
+            transform: translateX(-100%);
+        }
+        
+        .sidebar.active {
+            transform: translateX(0);
+        }
+        
+        .mobile-menu-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stats-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .stats-cards {
+            grid-template-columns: 1fr;
+        }
+        
+        .header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        
+        .user-info {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .search-bar input {
+            width: 100%;
+        }
+    }
+</style>
+
+
+   
+    
+    <!-- Mobile Menu Button -->
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <!-- Main Content -->
+    <main class="main-content" id="print_area">
+        <!-- Header -->
+        <div class="header" style="margin-top:50px;">
+            <h1>Dashboard Overview</h1>
+            <div class="user-info">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </div>
+                <div class="user-avatar">JD</div>
+            </div>
+        </div>
+        
+        <!-- Stats Cards -->
+        <div class="stats-cards">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Total Revenue</h3>
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value">$24,580</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i> 12.5%
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Total Orders</h3>
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value">1,248</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i> 8.2%
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Active Customers</h3>
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value">3,450</div>
+                    <div class="card-change positive">
+                        <i class="fas fa-arrow-up"></i> 5.7%
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h3>Conversion Rate</h3>
+                    <i class="fas fa-percentage"></i>
+                </div>
+                <div class="card-content">
+                    <div class="card-value">4.8%</div>
+                    <div class="card-change negative">
+                        <i class="fas fa-arrow-down"></i> 1.2%
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts -->
+        <div class="charts-container">
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Sales Overview</h3>
+                    <select id="salesPeriod">
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                        <option>Last 3 Months</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="salesChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Top Categories</h3>
+                    <select id="categoryPeriod">
+                        <option>This Month</option>
+                        <option>Last Month</option>
+                        <option>This Quarter</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Orders -->
+        <div class="recent-orders">
+            <h3>Recent Orders</h3>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#ORD-7841</td>
+                        <td>John Smith</td>
+                        <td>May 15, 2023</td>
+                        <td>$245.99</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-7840</td>
+                        <td>Emma Johnson</td>
+                        <td>May 15, 2023</td>
+                        <td>$128.50</td>
+                        <td><span class="status pending">Pending</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-7839</td>
+                        <td>Robert Davis</td>
+                        <td>May 14, 2023</td>
+                        <td>$367.20</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-7838</td>
+                        <td>Sarah Miller</td>
+                        <td>May 14, 2023</td>
+                        <td>$89.99</td>
+                        <td><span class="status processing">Processing</span></td>
+                    </tr>
+                    <tr>
+                        <td>#ORD-7837</td>
+                        <td>Michael Wilson</td>
+                        <td>May 13, 2023</td>
+                        <td>$542.75</td>
+                        <td><span class="status completed">Completed</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+        document.querySelector('.sidebar').classList.toggle('active');
+        this.innerHTML = document.querySelector('.sidebar').classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Initialize Sales Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: ['May 9', 'May 10', 'May 11', 'May 12', 'May 13', 'May 14', 'May 15'],
+            datasets: [{
+                label: 'Sales ($)',
+                data: [3200, 4100, 3800, 5200, 4800, 6100, 7300],
+                borderColor: '#4361ee',
+                backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    },
+                    ticks: {
+                        callback: function(value) {
+                            return '$' + value.toLocaleString();
+                        }
+                    }
+                },
+                x: {
+                    grid: {
+                        color: 'rgba(0, 0, 0, 0.05)'
+                    }
+                }
+            }
+        }
+    });
+    
+    // Initialize Category Chart
+    const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+    const categoryChart = new Chart(categoryCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Electronics', 'Clothing', 'Home & Kitchen', 'Books', 'Beauty'],
+            datasets: [{
+                data: [35, 25, 20, 12, 8],
+                backgroundColor: [
+                    '#4361ee',
+                    '#3a0ca3',
+                    '#4cc9f0',
+                    '#f72585',
+                    '#7209b7'
+                ],
+                borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 15
+                    }
+                }
+            }
+        }
+    });
+    
+    // Update chart data based on selected period
+    document.getElementById('salesPeriod').addEventListener('change', function() {
+        const periods = {
+            'Last 7 Days': [3200, 4100, 3800, 5200, 4800, 6100, 7300],
+            'Last 30 Days': [3200, 2800, 3500, 4100, 3900, 4200, 5100, 4800, 5200, 6100, 5900, 6700, 7300, 7100, 7800, 8200, 7900, 8500, 9100, 8900, 9400, 9800, 10200, 10500, 11000, 11500, 11200, 11800, 12200, 12500],
+            'Last 3 Months': [12500, 13200, 14100, 12800, 13500, 14200, 14800, 15500, 16200, 15800, 16500, 17200]
+        };
+        
+        const newData = periods[this.value];
+        const newLabels = Array.from({length: newData.length}, (_, i) => `Day ${i+1}`);
+        
+        salesChart.data.labels = newLabels;
+        salesChart.data.datasets[0].data = newData;
+        salesChart.update();
+    });
+    
+    // Simulate real-time data updates
+    setInterval(() => {
+        const revenueElement = document.querySelector('.card-value');
+        let currentRevenue = parseFloat(revenueElement.textContent.replace('$', '').replace(',', ''));
+        const change = (Math.random() - 0.5) * 100;
+        currentRevenue += change;
+        
+        revenueElement.textContent = '$' + Math.round(currentRevenue).toLocaleString();
+        
+        const changeElement = document.querySelector('.card-change.positive');
+        const randomChange = (Math.random() * 5).toFixed(1);
+        changeElement.innerHTML = `<i class="fas fa-arrow-up"></i> ${randomChange}%`;
+    }, 5000);
+</script>
+
+<%-include("footer.ejs")%>

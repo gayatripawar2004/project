@@ -1,0 +1,70 @@
+                <%-include("navbar.ejs")%>
+                
+                
+                <div class="container-fluid"></div>
+                 <div class="bg-white p-4">
+                   <h1>About Company</h1>
+                    <form action="/admin/abou_company" method="post">
+                        <div class="row">
+                        <div class="col-md-4">                        
+                        Company Name
+                        <input type="text" value="<%=about_company[0].company_name%>" class="form-control" name="company_name">
+                        </div>
+                        
+                         <div class="col-md-4">                        
+                        Company Mobile/Contact
+                        <input type="number" value="<%=about_company[0].company_mobile%>" class="form-control" name="company_mobile">
+                        </div>
+                        
+                        <div class="col-md-4">
+                            Comapany Mail
+                            <input type="email" value="<%=about_company[0].company_email%>" class="form-control" name="company_email">
+                         </div>
+                         
+                         <div class="col-md-4">
+                            Company whatsapp
+                            <input type="number" value="<%=about_company[0].company_whatsapp%>" class="form-control" name="company_whatsapp">
+                         </div>
+                         
+                         <div class="col-md-12 m-2">
+                            Comapany Address 
+                            <textarea class="form-control"  name="comapany_address"><%=about_company[0].comapany_address%></textarea>
+                         </div>
+                         
+                         <div class="col-md-3">
+                            Instagram Link
+                            <input type="text" value="<%=about_company[0].insta%>" class="form-control" name="insta">
+                         </div>
+                         <div class="col-md-3">
+                            Youtube Link 
+                            <input type="text" value="<%=about_company[0].youtube%>" class="form-control" name="youtube">
+                         </div>
+                          <div class="col-md-3">
+                            Telegram Link 
+                            <input type="text" value="<%=about_company[0].telegram%>" class="form-control" name="telegram">
+                         </div>
+                        
+                           <div class="col-md-12 text-center m-2">
+                            <button class="btn-primary btn">Save</button>
+                            </div>
+                          </div>
+                    </form>
+              
+                </div>
+            
+            
+            <%-include("footer.ejs")%>
+            
+            
+            <!-- CREATE TABLE about_company(
+                id INT PRIMARY KEY AUTO_INCREMENT,
+                company_name VARCHAR(100),
+                company_mobile VARCHAR(12),
+                company_email VARCHAR(100),
+                company_whatsapp VARCHAR(12),
+                comapany_address TEXT,
+                insta TEXT,
+                youtube TEXT,
+                telegram TEXT );
+                 -->
+            

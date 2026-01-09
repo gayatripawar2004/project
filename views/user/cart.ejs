@@ -1,0 +1,128 @@
+<%-include("navbar.ejs")%>
+
+<div class="container-fluid bg-white p-4">
+    <h2 class="cart-title">Shopping Cart</h2>
+    <div class="row">
+        <div class="col-md-12">
+<div class="cart-wrapper">
+  <table class="cart-table" width="100%">
+
+    <thead  style="background-color: black; color:white;font-weight:bold;">
+      <tr>
+        <th>Image</th>
+        <th>Product Name</th>
+        <th>Size</th>
+        <th>Qty</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+   
+   <tbody style="background-color:gray; color:black;font-weight:bold;">
+    <% var sum = 0 %>
+  <% cart.map(function(val,i){ %>      
+    <tr>
+      <td>
+        <img src="/upload/<%=val.image_1%>" width="60">
+      </td>
+
+      <td><%= val.product_name %></td>
+
+      <td><%= val.productL_size%></td>
+
+      <td>
+        <button type="button" onclick="decrease('<%= val.cart_id%>')">-</button>
+
+        <input type="number"min="1"value="<%= val.qty%>"class="qty">
+
+        <button type="button" onclick="increase('<%= val.cart_id%>')">+</button>
+      </td>
+
+      <td>₹<%= val.real_prize%></td>
+      <td>₹<%= val.qty * val.real_prize%></td>
+      <td><a href="/cart_remove/<%=val.cart_id%>" ><i class="fa-solid fa-trash-arrow-up"></i></a></td>
+    </tr> 
+    <% sum += (val.qty * val.real_prize)%>
+  <% }) %>
+</tbody>
+ 
+ 
+ 
+ 
+  </table>
+  
+  
+    
+  </div>
+</div>
+
+
+<div class="col-md-12">
+    <div class="total-section">
+    <h3>Grand Total: ₹<%=sum%></h3>
+    <button class="checkout-btn"><a href="/checkout">Procced to Checkout</a></button>
+</div>
+
+</div>
+</div>
+
+<script>
+    function increase(cart_id){
+      var url = '/qtyincrease/'+cart_id;
+      location.href = url;
+      console.log(url)
+    }
+    function decrease(cart_id){
+      var url = `/decrese/` +cart_id;
+      location.href= url;
+      
+    }
+      
+</script>
+
+<style>
+    th{
+    text-align: center;
+    }
+    
+    .qty{
+        width:100px;
+    }
+    td{
+        padding: 0%;
+        width: auto;
+        text-align: center;
+    }
+    
+    .total-section {
+  display: flex;
+  flex-direction: column;
+  align-items:flex-end;   /* center horizontally */
+}
+
+.total-section h3 {
+  color: #000;
+}
+
+.checkout-btn {
+  padding: 12px 30px;
+  background-color: rgb(6, 99, 36);
+  color: white;  
+  border-radius: 6px;  
+  cursor: pointer;
+  margin:0px; 
+}
+
+.checkout-btn:hover {
+  background-color: #055cb9;
+}
+
+</style>
+
+
+
+
+
+<%-include("footer")%>
