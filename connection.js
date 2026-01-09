@@ -4,10 +4,10 @@ var url = require("url");
 
 
 const conn = mysql.createConnection({
-    host: "bfb15wq8xz61ryiwmzjy-mysql.services.clever-cloud.com",
-    user: "uxbf3ihdvnnnaonr",
-    password: "uxbf3ihdvnnnaonr",
-    database: "bfb15wq8xz61ryiwmzjy",
+    host: "brf19hafnfydg8pmajkn-mysql.services.clever-cloud.com",
+    user: "u6bettqiyq4f6oqe",
+    password: "0sjVSGaEDIsusg5ayLXE",
+    database: "brf19hafnfydg8pmajkn",
    
 })
 const exe = util.promisify(conn.query).bind(conn);
